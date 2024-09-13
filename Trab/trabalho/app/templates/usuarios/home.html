@@ -1,11 +1,85 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-us" dir="ltr" data-theme="auto">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nav_sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
 </head>
-<body>
-    <a href="{% url 'login' %}">Login</a>
-    <a href="{% url 'cadastro' %}">Cadastro</a>
+
+<body class=" dashboard" data-admin-utc-offset="0">
+
+    <div id="container">            
+        <header id="header">
+                <div id="branding">
+                    <div id="site-name">
+                        <a href="{% url 'home' %}">Home</a>
+                    </div>
+                </div>
+                            
+                            
+                <div id="user-tools">  
+                    {% if not request.user.is_authenticated %}
+                    <a href="{% url 'login' %}">Login</a> /
+                    <a href="{% url 'cadastro' %}">Cadastro</a>
+                    {% else %}
+                    Bem-vindo,
+                    <strong>{{request.user.username}}</strong>. /
+                    <a href="{% url 'logout' %}">Logout</a>
+                    {% endif %}
+                                    
+                </div>                                
+            </header>
+
+            <div class="main" id="main">
+                <main id="content-start" class="content" tabindex="-1">
+                    <div id="content" class="colMS">
+                        <h1>Dashboard</h1>
+
+                        <a href="{% url 'tarefas' %}">Minhas tarefas</a>
+                        <br><br>
+                        <h2>Todas as tarefas</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th> ID </th>
+                                    <th> Título </th>
+                                    <th> Descrição </th>
+                                    <th> Status </th>
+                                    <th> Nome do responsável </th>
+                                </tr>
+                            </thead>
+
+                            
+                            <tbody>
+                                {% for tarefa in tarefas %}
+                                <tr>
+                                    <td> {{ tarefa.id_tarefa }} </td>
+                                    <td> 
+                                        <span class="tarefa-atributos">
+                                            {{ tarefa.titulo }} 
+                                        </span>
+                                    </td>
+                                    <td> 
+                                        <span class="tarefa-atributos">
+                                            {{ tarefa.descricao }} 
+                                        </span>
+                                    </td>
+                                    <td> {{ tarefa.status }} </td>
+                                    <td> {{ tarefa.responsavel }}</td>
+
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </main>
+            </div>
+            <footer id="footer"></footer>
+    </div>
 </body>
 </html>

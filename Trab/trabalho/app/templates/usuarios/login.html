@@ -1,11 +1,66 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Log in</title>
+    
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
 </head>
-<body>
-    <form action = "{% url 'login' %}" method = POST>
+<body class=" login">
+    <div id="container">
+            <header id="header">
+                <div id="branding">
+                    <div id="site-name">
+                        <a href="{% url 'login' %}">Login</a>
+                    </div>
+                </div> 
+            </header>
+        
+            <div class="main" id="main">
+                <main id="content-start" class="content" tabindex="-1">  
+                    <div id="content" class="colM">
+                        <div id="content-main">
+                            <form action="{% url 'login' %}" method="post" id="login-form"><input type="hidden">
+                                {% csrf_token %}
+                                <div class="form-row">
+                                    <label for="username" class="required">Nome de usuário:</label> 
+                                    <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" class="input-form">
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="senha class" class="required">Senha:</label> 
+                                    <input type="password" name="senha" autocomplete="current-password" required="" class="input-form">
+                                </div> 
+                                
+                                <div class="submit-row">
+                                    <input type="submit" value="Log in">
+                                </div>
+
+                                {% if erro %}
+                                <br>
+                                
+                                <span class="errornote">{{ erro }}</span>
+                                {% endif %}
+                                <br>
+
+                                <span>
+                                    Não tem conta? <a href = "{% url 'cadastro' %}">Cadastre-se</a>
+                                </span>
+                            </form>
+                        </div>
+                                
+                        <br class="clear">
+                    </div>
+                </main>
+            </div>
+        <footer id="footer"></footer>
+    </div>
+
+    <!-- <form action = "{% url 'login' %}" method = POST>
         {% csrf_token %}
         <input type="text" placeholder="username" name = "username">
         <br>
@@ -15,6 +70,6 @@
         <span>
             Não tem conta? <a href = "{% url 'cadastro' %}">Cadastre-se</a>
         </span>
-    </form>
+    </form> -->
 </body>
 </html>
